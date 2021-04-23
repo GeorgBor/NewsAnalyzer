@@ -30,7 +30,7 @@ public class UserInterface
 				.setQ("corona")
 				.setEndPoint(Endpoint.TOPHEADLINES)
 				.setSourceCountry(Country.at)
-				.setSourceCategory(Category.health)
+				.setSourceCategory(Category.business)
 				.createNewsApi();
 
 		try {
@@ -46,13 +46,74 @@ public class UserInterface
 	}
 
 	public void getDataFromCtrl2(){
+		System.out.println("DEF");
+
+		NewsApi newsApi = new NewsApiBuilder()
+				.setApiKey(APIKEY)
+				.setQ("corona")
+				.setEndPoint(Endpoint.TOP_HEADLINES)
+				.setSourceCountry(Country.at)
+				.setSourceCategory(Category.sports)
+				.createNewsApi();
+
+		try {
+			ctrl.process(newsApi);
+		} catch (MalformedURLException e){
+			System.out.println("Stimmt wos ned!");
+		} catch (NewsAnalyzerException e){
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void getDataFromCtrl3(){
+		System.out.println("3");
+
+		NewsApi newsApi = new NewsApiBuilder()
+				.setApiKey(APIKEY)
+				.setQ("corona")
+				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setSourceCountry(Country.at)
+				.setSourceCategory(Category.technology)
+				.createNewsApi();
+
+		try {
+			ctrl.process(newsApi);
+		} catch (MalformedURLException e){
+			System.out.println("Stimmt wos ned!");
+		} catch (NewsAnalyzerException e){
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
 	}
 	
 	public void getDataForCustomInput() {
+		System.out.println("Input choice!");
+
+		NewsApi newsApi = new NewsApiBuilder()
+				.setApiKey(APIKEY)
+				.setQ("USA")
+				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setSourceCountry(Country.us)
+				.setSourceCategory(Category.business)
+				.createNewsApi();
+
+		try {
+			ctrl.process(newsApi);
+		} catch (MalformedURLException e){
+			System.out.println("Stimmt wos ned!");
+		} catch (NewsAnalyzerException e){
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 		
 	}
 

@@ -29,6 +29,9 @@ public class Controller {
 
 
 			System.out.println("Shortest Article: "+getNumberOfArcivel(articles));
+			System.out.println("Provider with most Article: "+getNumberOfArcivel(articles));
+			System.out.println("Author with shortest Names: "+getTitlelessSort(articles));
+			System.out.println("Longest Title: "+ getMostFreqeunt(articles));
 		}
 
 
@@ -40,15 +43,6 @@ public class Controller {
 		//TODO load the news based on the parameters
 
 		//TODO implement methods for analysis
-
-		/*NewsApi newsApi = new NewsApiBuilder()
-				.setApiKey(APIKEY)
-				.setQ("corona")
-				.setEndPoint(Endpoint.TOPHEADLINES)
-				.setSourceCountry(Country.at)
-				.setSourceCategory(Category.health)
-				.createNewsApi();
-		*/
 
 		System.out.println("End process");
 	}
@@ -71,13 +65,6 @@ public class Controller {
 				.stream()
 				.sorted(Comparator.comparingInt(Article -> Article.getTitle().length()))
 				.collect(Collectors.toList());
-	}
-
-	public void analyze1(){
-
-	}
-	public void analyze2(){
-
 	}
 	
 

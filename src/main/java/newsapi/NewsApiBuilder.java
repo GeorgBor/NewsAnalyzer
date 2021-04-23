@@ -1,7 +1,5 @@
 package newsapi;
 
-//import newsapi.enums.*;
-
 import newsapi.enums.*;
 
 public class NewsApiBuilder {
