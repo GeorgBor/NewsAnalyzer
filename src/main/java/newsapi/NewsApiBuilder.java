@@ -1,6 +1,5 @@
 package newsapi;
 
-//import newsapi.enums.*;
 
 import newsapi.enums.*;
 
