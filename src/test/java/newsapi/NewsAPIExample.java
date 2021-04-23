@@ -20,7 +20,7 @@ public class NewsAPIExample {
         NewsApi newsApi = new NewsApiBuilder()
                 .setApiKey(APIKEY)
                 .setQ("corona")
-                .setEndPoint(Endpoint.TOPHEADLINES)
+                .setEndPoint(Endpoint.TOP_HEADLINES)
                 .setSourceCountry(Country.at)
                 .setSourceCategory(Category.health)
                 .createNewsApi();

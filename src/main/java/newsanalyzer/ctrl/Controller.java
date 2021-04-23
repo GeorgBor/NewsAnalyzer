@@ -4,13 +4,15 @@ import newsapi.NewsApi;
 import newsapi.NewsApiBuilder;
 import newsapi.beans.Article;
 import newsapi.beans.NewsReponse;
-import newsapi.enums.Endpoint;
-import newsapi.enums.Category;
-import newsapi.enums.Country;
+import newsapi.enums.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Controller {
 
@@ -24,7 +26,14 @@ public class Controller {
 			List<Article> articles = reponse.getArticles();
 
 			articles.stream().forEach(article -> System.out.println(articles.toString()));
+
+
+			System.out.println("Shortest Article: "+getNumberOfArcivel(articles));
 		}
+
+
+
+
 
 		//TODO implement Error handling
 
@@ -41,10 +50,29 @@ public class Controller {
 				.createNewsApi();
 		*/
 
-
-
 		System.out.println("End process");
 	}
+	public String getMostFreqeunt(List<Article> data){
+		return data
+				.stream()
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet()
+				.stream()
+				.max(Comparator.comparing(Map.Entry::getValue)).get().getKey().getSource().getName();
+
+
+	}
+	public long getNumberOfArcivel(List<Article> data){
+		return data.stream().count();
+	}
+
+	public List<Article> getTitlelessSort(List<Article> data){
+		return data
+				.stream()
+				.sorted(Comparator.comparingInt(Article -> Article.getTitle().length()))
+				.collect(Collectors.toList());
+	}
+
 	public void analyze1(){
 
 	}
@@ -53,10 +81,8 @@ public class Controller {
 	}
 	
 
-	public Object getData() {
+	public Object getData(NewsApi newsApi) throws NewsAnalyzerException, IOException {
 
-
-		
-		return null;
+		return newsApi.getNews();
 	}
 }

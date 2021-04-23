@@ -108,7 +108,7 @@ public class NewsApi {
         this.endpoint = endpoint;
     }
 
-    protected String requestData() throws MalformedURLException {
+    protected String requestData() throws MalformedURLException, NewsAnalyzerException {
         String url = buildURL();
         System.out.println("URL: "+url);
         URL obj = null;
@@ -136,8 +136,15 @@ public class NewsApi {
         return response.toString();
     }
 
-    protected String buildURL() {
+    protected String buildURL() throws NewsAnalyzerException{
         // TODO ErrorHandling
+
+        if (getEndpoint().getValue() == null || getQ() == null || getApiKey() == null){
+            throw new NewsAnalyzerException("Error");
+        }else {
+
+        }
+
         String urlbase = String.format(NEWS_API_URL,getEndpoint().getValue(),getQ(),getApiKey());
         StringBuilder sb = new StringBuilder(urlbase);
 
