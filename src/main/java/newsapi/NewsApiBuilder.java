@@ -1,5 +1,7 @@
 package newsapi;
 
+//import newsapi.enums.*;
+
 import newsapi.enums.*;
 
 public class NewsApiBuilder {
@@ -90,6 +92,8 @@ public class NewsApiBuilder {
     }
 
     public NewsApi createNewsApi() {
-        return new NewsApi(q, qInTitle, sourceCountry, sourceCategory, domains, excludeDomains, from, to, language, sortBy, pageSize, page, apiKey, endpoint);
+        return new NewsApi(q, qInTitle, sourceCountry, sourceCategory,
+                domains, excludeDomains, from, to, language, sortBy,
+                pageSize, page, apiKey, endpoint);
     }
 }

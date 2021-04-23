@@ -10,14 +10,14 @@ import java.util.List;
 
 public class NewsAPIExample {
 
-    public static final String APIKEY = "myAPIKey";
+    public static final String APIKEY = "1742bdaea27f46f4a303693c5327ae64";
 
     public static void main(String[] args){
 
         NewsApi newsApi = new NewsApiBuilder()
                 .setApiKey(APIKEY)
                 .setQ("corona")
-                .setEndPoint(Endpoint.TOP_HEADLINES)
+                .setEndPoint(Endpoint.TOPHEADLINES)
                 .setSourceCountry(Country.at)
                 .setSourceCategory(Category.health)
                 .createNewsApi();
@@ -32,7 +32,7 @@ public class NewsAPIExample {
                 .setApiKey(APIKEY)
                 .setQ("corona")
                 .setEndPoint(Endpoint.EVERYTHING)
-                .setFrom("2020-03-20")
+                .setFrom("2021-04-20")
                 .setExcludeDomains("Lifehacker.com")
                 .createNewsApi();
 

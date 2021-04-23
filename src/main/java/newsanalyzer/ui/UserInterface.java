@@ -29,7 +29,6 @@ public class UserInterface
 		
 	}
 
-
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
 		menu.setTitel("Wählen Sie aus:");
