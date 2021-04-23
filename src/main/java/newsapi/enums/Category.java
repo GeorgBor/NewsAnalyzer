@@ -1,5 +1,5 @@
 package newsapi.enums;
 
 public enum Category {
-    health
+    business, entertainment, health, science, sports, technology
 }

@@ -1,9 +1,17 @@
 package newsapi.enums;
 
 public enum Endpoint {
-    TOPHEADLINES, TOP_HEADLINES, EVERYTHING;
+    TOP_HEADLINES("top-headlines"),
 
-    public Object getValue() {
-        return null;
+    EVERYTHING("everything"), TOPHEADLINES("TopHeadlines");
+
+    private String endPoint;
+
+    Endpoint(String endPoint){
+        this.endPoint = endPoint;
+    }
+
+    public String getValue() {
+        return endPoint;
     }
 }
