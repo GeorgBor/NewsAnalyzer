@@ -1,6 +1,5 @@
 package newsanalyzer.ui;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,7 +35,7 @@ public class UserInterface
 		try {
 			ctrl.process(newsApi);
 		} catch (MalformedURLException e){
-			System.out.println("Stimmt wos ned!");
+			System.out.println("Stimmt wos ned im ABC!");
 		} catch (NewsAnalyzerException e){
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -51,15 +50,15 @@ public class UserInterface
 		NewsApi newsApi = new NewsApiBuilder()
 				.setApiKey(APIKEY)
 				.setQ("corona")
-				.setEndPoint(Endpoint.TOP_HEADLINES)
+				.setEndPoint(Endpoint.TOPHEADLINES)
 				.setSourceCountry(Country.at)
-				.setSourceCategory(Category.sports)
+				.setSourceCategory(Category.health)
 				.createNewsApi();
 
 		try {
 			ctrl.process(newsApi);
 		} catch (MalformedURLException e){
-			System.out.println("Stimmt wos ned!");
+			System.out.println("Stimmt wos ned im DEF!");
 		} catch (NewsAnalyzerException e){
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -82,7 +81,7 @@ public class UserInterface
 		try {
 			ctrl.process(newsApi);
 		} catch (MalformedURLException e){
-			System.out.println("Stimmt wos ned!");
+			System.out.println("Stimmt wos ned im 3!");
 		} catch (NewsAnalyzerException e){
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -106,7 +105,7 @@ public class UserInterface
 		try {
 			ctrl.process(newsApi);
 		} catch (MalformedURLException e){
-			System.out.println("Stimmt wos ned!");
+			System.out.println("Stimmt wos ned by your Choise!");
 		} catch (NewsAnalyzerException e){
 			System.out.println(e.getMessage());
 		} catch (IOException e) {

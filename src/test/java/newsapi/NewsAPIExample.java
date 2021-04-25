@@ -8,7 +8,6 @@ import newsapi.enums.Country;
 import newsapi.enums.Endpoint;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 
 public class NewsAPIExample {

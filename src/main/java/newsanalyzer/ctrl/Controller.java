@@ -1,13 +1,10 @@
 package newsanalyzer.ctrl;
 
 import newsapi.NewsApi;
-import newsapi.NewsApiBuilder;
 import newsapi.beans.Article;
 import newsapi.beans.NewsReponse;
-import newsapi.enums.*;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -28,15 +25,11 @@ public class Controller {
 			articles.stream().forEach(article -> System.out.println(articles.toString()));
 
 
-			System.out.println("Shortest Article: "+getNumberOfArcivel(articles));
-			System.out.println("Provider with most Article: "+getNumberOfArcivel(articles));
-			System.out.println("Author with shortest Names: "+getTitlelessSort(articles));
-			System.out.println("Longest Title: "+ getMostFreqeunt(articles));
+			System.out.println("Number of Articel: "+ getNumberOfArticel(articles));
+			System.out.println("Provider with most Article: "+ getNumberOfMostArticel(articles));
+			System.out.println("Author with shortest Names: "+ getAuthorWithShortestName(articles));
+			System.out.println("Longest Title: "+ getLongestTitleFromTheAlphabet(articles));
 		}
-
-
-
-
 
 		//TODO implement Error handling
 
@@ -46,25 +39,32 @@ public class Controller {
 
 		System.out.println("End process");
 	}
-	public String getMostFreqeunt(List<Article> data){
+	public String getNumberOfArticel(List<Article> data){
 		return data
 				.stream()
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
 				.entrySet()
 				.stream()
-				.max(Comparator.comparing(Map.Entry::getValue)).get().getKey().getSource().getName();
-
+				.max(Comparator.comparing(Map.Entry::getValue)).get()
+				.getKey().getSource().getName();
 
 	}
-	public long getNumberOfArcivel(List<Article> data){
+	public long getNumberOfMostArticel(List<Article> data){
 		return data.stream().count();
 	}
 
-	public List<Article> getTitlelessSort(List<Article> data){
+	public List<Article> getLongestTitleFromTheAlphabet(List<Article> data){
 		return data
 				.stream()
 				.sorted(Comparator.comparingInt(Article -> Article.getTitle().length()))
 				.collect(Collectors.toList());
+	}
+	public List<Article> getAuthorWithShortestName(List<Article> data){
+		return data
+				.stream()
+				.sorted(Comparator.comparing(Article -> Article.getAuthor().length()))
+				.collect(Collectors.toList());
+
 	}
 	
 
