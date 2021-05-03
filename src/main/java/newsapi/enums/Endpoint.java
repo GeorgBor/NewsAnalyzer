@@ -3,7 +3,7 @@ package newsapi.enums;
 public enum Endpoint {
     TOP_HEADLINES("top-headlines"),
 
-    EVERYTHING("everything"), TOPHEADLINES("TopHeadlines");
+    EVERYTHING("everything");
 
     private String endPoint;
 

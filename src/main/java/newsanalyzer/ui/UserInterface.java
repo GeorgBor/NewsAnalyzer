@@ -4,11 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import newsanalyzer.ctrl.Controller;
 import newsanalyzer.ctrl.NewsAnalyzerException;
+import newsanalyzer.downloader.Downloader;
+import newsanalyzer.downloader.ParallelDownloader;
+import newsanalyzer.downloader.SequentialDownloader;
 import newsapi.NewsApi;
 import newsapi.NewsApiBuilder;
+import newsapi.beans.Article;
+import newsapi.beans.NewsReponse;
 import newsapi.enums.Endpoint;
 import newsapi.enums.Country;
 import newsapi.enums.Category;
@@ -19,7 +27,12 @@ public class UserInterface
 {
 
 	public static final String apiKey = "1742bdaea27f46f4a303693c5327ae64";
+
 	private Controller ctrl = new Controller();
+
+	private Downloader seqDown = new SequentialDownloader();
+	private Downloader parDown = new ParallelDownloader();
+
 
 	public void getDataFromCtrl1(){
 		System.out.println("ABC");
@@ -27,7 +40,7 @@ public class UserInterface
 		NewsApi newsApi = new NewsApiBuilder()
 				.setApiKey(APIKEY)
 				.setQ("corona")
-				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setEndPoint(Endpoint.TOP_HEADLINES)
 				.setSourceCountry(Country.at)
 				.setSourceCategory(Category.business)
 				.createNewsApi();
@@ -50,7 +63,7 @@ public class UserInterface
 		NewsApi newsApi = new NewsApiBuilder()
 				.setApiKey(APIKEY)
 				.setQ("corona")
-				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setEndPoint(Endpoint.TOP_HEADLINES)
 				.setSourceCountry(Country.at)
 				.setSourceCategory(Category.health)
 				.createNewsApi();
@@ -73,7 +86,7 @@ public class UserInterface
 		NewsApi newsApi = new NewsApiBuilder()
 				.setApiKey(APIKEY)
 				.setQ("corona")
-				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setEndPoint(Endpoint.TOP_HEADLINES)
 				.setSourceCountry(Country.at)
 				.setSourceCategory(Category.technology)
 				.createNewsApi();
@@ -97,7 +110,7 @@ public class UserInterface
 		NewsApi newsApi = new NewsApiBuilder()
 				.setApiKey(APIKEY)
 				.setQ("USA")
-				.setEndPoint(Endpoint.TOPHEADLINES)
+				.setEndPoint(Endpoint.TOP_HEADLINES)
 				.setSourceCountry(Country.us)
 				.setSourceCategory(Category.business)
 				.createNewsApi();
@@ -115,6 +128,33 @@ public class UserInterface
 
 		
 	}
+	public void downloadLastSearch(){
+
+		try {
+			ctrl.getDownloadLastSearch(seqDown);
+		} catch (MalformedURLException e){
+			System.out.println("Stimmt wos ned by your Choise!");
+		} catch (NewsAnalyzerException e){
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+	}
+	public void urlInOneList(){
+
+		try {
+			ctrl.getAllURLsInOneList((ParallelDownloader) parDown);
+		} catch (MalformedURLException e){
+			System.out.println("Stimmt wos ned by your Choise!");
+		} catch (NewsAnalyzerException e){
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interfacx");
@@ -123,6 +163,8 @@ public class UserInterface
 		menu.insert("b", "Choice DEF", this::getDataFromCtrl2);
 		menu.insert("c", "Choice 3", this::getDataFromCtrl3);
 		menu.insert("d", "Choice User Imput:",this::getDataForCustomInput);
+		menu.insert("s","Download Last Search", this::downloadLastSearch);
+		menu.insert("l","URL in one List", this::urlInOneList);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
 		while ((choice = menu.exec()) != null) {

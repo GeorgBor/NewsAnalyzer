@@ -1,13 +1,21 @@
 package newsanalyzer.ctrl;
 
+import newsanalyzer.downloader.Downloader;
+import newsanalyzer.downloader.ParallelDownloader;
+import newsanalyzer.downloader.SequentialDownloader;
 import newsapi.NewsApi;
+import newsapi.NewsApiBuilder;
 import newsapi.beans.Article;
 import newsapi.beans.NewsReponse;
+import newsapi.enums.Category;
+import newsapi.enums.Country;
+import newsapi.enums.Endpoint;
 
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,9 +26,9 @@ public class Controller {
 	public void process(NewsApi news) throws IOException, NewsAnalyzerException {
 		System.out.println("Start process");
 
-		NewsReponse reponse = news.getNews();
-		if (reponse != null){
-			List<Article> articles = reponse.getArticles();
+		NewsReponse response = news.getNews();
+		if (response != null){
+			List<Article> articles = response.getArticles();
 
 			articles.stream().forEach(article -> System.out.println(articles.toString()));
 
@@ -62,14 +70,88 @@ public class Controller {
 	public List<Article> getAuthorWithShortestName(List<Article> data){
 		return data
 				.stream()
-				.sorted(Comparator.comparing(Article -> Article.getAuthor().length()))
+				//.filter(Article -> Article.getAuthor().length() <=)
+				.sorted(Comparator.comparing(Article -> Article.getAuthor()))
 				.collect(Collectors.toList());
 
 	}
+	public void getAllURLsInOneList(ParallelDownloader parallelDownloader) throws IOException,
+			NewsAnalyzerException {
+		System.out.println("Download in one List");
+
+		NewsApi newsApi = new NewsApiBuilder()
+				.setApiKey(APIKEY)
+				.setQ("corona")
+				.setEndPoint(Endpoint.TOP_HEADLINES)
+				.setSourceCountry(Country.at)
+				.setSourceCategory(Category.technology)
+				.createNewsApi();
+
+		NewsReponse newsReponse = newsApi.getNews();
+
+		List<Article> articles = newsReponse.getArticles();
+		System.out.println(articles.size());
+		List<String> urls = articles.stream()
+				.map(Article::getUrl)
+				.filter(Objects::nonNull)
+				.collect(Collectors.toList());
+
+		SequentialDownloader sequentialDownloader = new SequentialDownloader();
+		System.out.println(urls.size());
+		sequentialDownloader.process(urls);
+
+
+
+	}
+
+	public void getDownloadLastSearch(Downloader downloader) throws IOException, NewsAnalyzerException {
+		System.out.println("Download Last Search");
+
+		NewsApi newsApi = new NewsApiBuilder()
+				.setApiKey(APIKEY)
+				.setQ("corona")
+				.setEndPoint(Endpoint.TOP_HEADLINES)
+				.setSourceCountry(Country.at)
+				.setSourceCategory(Category.health)
+				.createNewsApi();
+
+		NewsReponse newsReponse = newsApi.getNews();
+
+		if (newsReponse != null){
+			List<Article> articles = newsReponse.getArticles();
+
+			var urls = articles
+					.stream()
+					.map(Article::getUrl)
+					.filter(Objects::nonNull)
+					.collect(Collectors.toList());
+
+			long timer = System.currentTimeMillis();
+			downloader.process(urls);
+
+			if (downloader instanceof ParallelDownloader ){
+				System.out.println("Paralelldownloader Time: "+ (System.currentTimeMillis() - timer));
+			}
+			else if (downloader instanceof SequentialDownloader){
+				System.out.println("SequenceDownloader: " + (System.currentTimeMillis() -timer));
+			}
+
+			urls.forEach(System.out::println);
+
+
+
+		}
+	}
+
+
+
 	
 
 	public Object getData(NewsApi newsApi) throws NewsAnalyzerException, IOException {
 
 		return newsApi.getNews();
 	}
+
+
+
 }
